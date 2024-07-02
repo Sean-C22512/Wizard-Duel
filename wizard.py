@@ -2,7 +2,7 @@ import pygame
 
 
 class Wizard(pygame.sprite.Sprite):
-    def __init__(self, name, max_health, max_mana, image_path):
+    def __init__(self, name, max_health, max_mana, image_paths):
         super().__init__()
         self.name = name
         self.max_health = max_health
@@ -10,9 +10,17 @@ class Wizard(pygame.sprite.Sprite):
         self.max_mana = max_mana
         self.mana = max_mana
         self.spells = []
-        self.image = pygame.image.load(image_path).convert_alpha()  # Load the image for the sprite
-        self.rect = self.image.get_rect()  # The rectangle that encloses the image
-        self.position = self.rect.topleft  # Set the initial position
+        # Load images for different directions
+        self.images = {
+            'right': pygame.image.load(image_paths['right']).convert_alpha(),
+            'left': pygame.image.load(image_paths['left']).convert_alpha(),
+            'forward': pygame.image.load(image_paths['forward']).convert_alpha(),
+            'back': pygame.image.load(image_paths['back']).convert_alpha()
+        }
+
+        self.image = self.images['forward']  # Start with the forward image
+        self.rect = self.image.get_rect()
+        self.position = self.rect.topleft
 
     def cast_spell(self, spell, target):
         if spell.mana_cost <= self.mana:
@@ -32,10 +40,14 @@ class Wizard(pygame.sprite.Sprite):
             self.mana = self.max_mana
 
     def move(self, direction, distance):
-        # Move the wizard according to the direction
-        if direction == 'up':
+
+        # Update the wizard's image based on direction
+        if direction in self.images:
+            self.image = self.images[direction]
+
+        if direction == 'forward':
             self.rect.y -= distance
-        elif direction == 'down':
+        elif direction == 'back':
             self.rect.y += distance
         elif direction == 'left':
             self.rect.x -= distance
@@ -46,8 +58,7 @@ class Wizard(pygame.sprite.Sprite):
         print(f"{self.name} has died.")
 
     def update(self):
-        # This method would be called each frame to handle automatic updates
-        self.regenerate_mana(1)  # Example: Regenerate 1 mana per frame
+        self.regenerate_mana(1)
 
     def add_spell(self, spell):
         self.spells.append(spell)
