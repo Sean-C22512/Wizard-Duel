@@ -1,6 +1,6 @@
 import pygame
 from wizard import Wizard  # Ensure you have a Wizard class defined in wizard.py
-
+##
 
 class Game:
 
