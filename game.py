@@ -10,6 +10,7 @@ class Game:
         self.window = pygame.display.set_mode(self.window_size, pygame.FULLSCREEN if self.full_screen else 0)
         pygame.display.set_caption(config['Wizard Duel'])
         self.clock = pygame.time.Clock()
+        //
 
         # Initialize your wizard and add it to a sprite group
         self.wizard = Wizard("Harry", 100, 200, 'assets/wizard.png')
