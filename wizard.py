@@ -54,6 +54,11 @@ class Wizard(pygame.sprite.Sprite):
         elif direction == 'right':
             self.rect.x += distance
 
+    def display_hearts(self, screen, heart_images):
+        num_hearts = int((self.health / self.max_health) * 5)
+        heart_image = heart_images[num_hearts]
+        screen.blit(heart_image, (screen.get_width() - heart_image.get_width(), 0))
+
     def die(self):
         print(f"{self.name} has died.")
 

@@ -18,6 +18,11 @@ class Game:
             'back': 'assets/wizard_back.png'
         }
 
+        # Load heart images
+        self.heart_images = [
+            pygame.image.load(f'assets/{i}heart.png').convert_alpha() for i in range(6)
+        ]
+
         # Initialize your wizard and add it to a sprite group
         self.wizard = Wizard("Harry", 100, 200, wizard_images)
         self.sprites = pygame.sprite.Group()
@@ -53,4 +58,5 @@ class Game:
     def render(self):
         self.window.fill((0, 0, 0))
         self.sprites.draw(self.window)
+        self.wizard.display_hearts(self.window, self.heart_images)
         pygame.display.flip()
